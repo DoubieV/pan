@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cl.dao.ZhaopinhuodongDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.cl.entity.ZhaopinhuodongEntity" id="zhaopinhuodongMap">
+        <result property="gangweimingcheng" column="gangweimingcheng"/>
+        <result property="bangonghuanjing" column="bangonghuanjing"/>
+        <result property="zhaopinrenshu" column="zhaopinrenshu"/>
+        <result property="xueliyaoqiu" column="xueliyaoqiu"/>
+        <result property="xinzidaiyu" column="xinzidaiyu"/>
+        <result property="gongzuoshijian" column="gongzuoshijian"/>
+        <result property="gangweixiangqing" column="gangweixiangqing"/>
+        <result property="huodongdidian" column="huodongdidian"/>
+        <result property="huodongshijian" column="huodongshijian"/>
+        <result property="huodongxiangqing" column="huodongxiangqing"/>
+        <result property="qiyezhanghao" column="qiyezhanghao"/>
+        <result property="qiyemingcheng" column="qiyemingcheng"/>
+        <result property="lianxidianhua" column="lianxidianhua"/>
+        <result property="qiyedizhi" column="qiyedizhi"/>
+        <result property="clicktime" column="clicktime"/>
+        <result property="storeupNumber" column="storeup_number"/>
+    </resultMap>
+
+    <select id="selectListView"
+		resultType="com.cl.entity.view.ZhaopinhuodongView" >
+
+		SELECT  zhaopinhuodong.* FROM zhaopinhuodong  zhaopinhuodong 	        
+        <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	<select id="selectView"
+		resultType="com.cl.entity.view.ZhaopinhuodongView" >
+		SELECT * FROM zhaopinhuodong  zhaopinhuodong <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+
+
+
+    <select id="selectValue" resultType="map" >
+        SELECT ${params.xColumn}, ROUND(sum(${params.yColumn}),1) total FROM zhaopinhuodong
+        <where> 1=1 ${ew.sqlSegment}</where>
+        group by ${params.xColumn}
+        limit 10
+    </select>
+
+    <select id="selectTimeStatValue" resultType="map" >
+        <if test = 'params.timeStatType == "日"'>
+                SELECT DATE_FORMAT(${params.xColumn},'%Y-%m-%d') ${params.xColumn}, sum(${params.yColumn}) total FROM zhaopinhuodong
+                <where> 1=1 ${ew.sqlSegment}</where>
+                group by DATE_FORMAT(${params.xColumn},'%Y-%m-%d')
+        </if>
+        <if test = 'params.timeStatType == "月"'>
+                SELECT DATE_FORMAT(${params.xColumn},'%Y-%m') ${params.xColumn}, sum(${params.yColumn}) total FROM zhaopinhuodong
+                <where> 1=1 ${ew.sqlSegment}</where>
+                group by DATE_FORMAT(${params.xColumn},'%Y-%m')
+        </if>
+        <if test = 'params.timeStatType == "年"'>
+                SELECT DATE_FORMAT(${params.xColumn},'%Y') ${params.xColumn}, sum(${params.yColumn}) total FROM zhaopinhuodong
+                <where> 1=1 ${ew.sqlSegment}</where>
+                group by DATE_FORMAT(${params.xColumn},'%Y')
+        </if>
+    </select>
+
+    <select id="selectGroup" resultType="map" >
+        SELECT ${params.column} , count(1) total FROM zhaopinhuodong
+        <where> 1=1 ${ew.sqlSegment}</where>
+        group by ${params.column}
+        limit 10
+    </select>
+
+
+
+</mapper>

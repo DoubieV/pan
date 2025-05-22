@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cl.dao.HuodongbaomingDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.cl.entity.HuodongbaomingEntity" id="huodongbaomingMap">
+        <result property="huodongmingcheng" column="huodongmingcheng"/>
+        <result property="huodongtupian" column="huodongtupian"/>
+        <result property="huodongdidian" column="huodongdidian"/>
+        <result property="huodongshijian" column="huodongshijian"/>
+        <result property="huodongxiangqing" column="huodongxiangqing"/>
+        <result property="shenqingshijian" column="shenqingshijian"/>
+        <result property="zhanghao" column="zhanghao"/>
+        <result property="xingming" column="xingming"/>
+    </resultMap>
+
+    <select id="selectListView"
+		resultType="com.cl.entity.view.HuodongbaomingView" >
+
+		SELECT  huodongbaoming.* FROM huodongbaoming  huodongbaoming 	        
+        <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	<select id="selectView"
+		resultType="com.cl.entity.view.HuodongbaomingView" >
+		SELECT * FROM huodongbaoming  huodongbaoming <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+
+
+
+</mapper>
